@@ -1,27 +1,15 @@
 
-function setup() {
-  createCanvas(600, 600);
-}
-
-function draw(){
-	background(240,240,240)
-	for (var i = 0; i<circles.length;i+=1){
-		circles[i].drawCircle()
-
-
-}	
-
-class Circle{
-
-	constructor(x,y,r,g,b,xsize,ysize,speed,angle,index){
-		this.x = x
-		this.y = y
+var balls = []
+var xwindow = 1275
+var ywindow = 685
+class ball{
+	constructor(radius,r,g,b,angle,speed){
 		this.radius = radius
 		this.r = r
 		this.g = g
 		this.b = b
-		this.x = 250
-		this.y = 250
+		this.x = xwindow/2
+		this.y = ywindow/2
 		this.angle = angle*2*Math.PI/360
 		this.speed = speed
 	}
@@ -34,14 +22,14 @@ class Circle{
 	moveBall(){
 		this.x += Math.cos(this.angle) * this.speed
 		this.y += Math.sin(this.angle) * this.speed
-		if(this.x>(500-this.radius/2)){
+		if(this.x>(xwindow-this.radius/2)){
 			this.angle =Math.PI-this.angle
 		}
 		if(this.x<this.radius/2){
 			this.angle =Math.PI-this.angle
 		}
 
-		if(this.y>(500-this.radius/2)){
+		if(this.y>(ywindow-this.radius/2)){
 			this.angle = 2*Math.PI-this.angle
 		}
 		if(this.y<this.radius/2){
@@ -52,8 +40,9 @@ class Circle{
 }
 
 function setup(){
-	createCanvas(500,500)
-	for (var i = 0;i<350;i+=1){
+	noStroke()
+	createCanvas(xwindow,ywindow)
+	for (var i = 0;i<200;i+=1){
 		var b = new ball(random(10,30),random(200,255),random(200,255),random(200,255),random(0,360),random(2,5))
  		balls.push(b)
 	}
@@ -64,7 +53,6 @@ function setup(){
 // }
 
 function draw(){
-	background("lightgrey")
 	for (var i = 0;i<balls.length;i+=1){
 		balls[i].moveBall()
 		balls[i].makeBall()
