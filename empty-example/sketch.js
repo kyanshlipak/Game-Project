@@ -1,7 +1,7 @@
 
 var balls = []
 var xwindow = 1275
-var ywindow = 685
+var ywindow = 605
 class ball{
 	constructor(radius,r,g,b,angle,speed){
 		this.radius = radius
@@ -12,20 +12,39 @@ class ball{
 		this.y = ywindow/2
 		this.angle = angle*2*Math.PI/360
 		this.speed = speed
+		this.previous = []
+		this.runtime = 0
+		this.back = false
 	}
 
 	makeBall(){
 		fill(this.r,this.g,this.b)
 		ellipse(this.x,this.y,this.radius,this.radius)
+		this.previous.push([this.x,this.y])
 	}
 
 	moveBall(){
+		
+		if (this.runtime>300 || this.back == true){
+			if (this.back == false){}
+			this.back = true
+			this.x = this.previous[this.runtime-1][0]
+			this.y = this.previous[this.runtime-1][1]
+			this.runtime -=1
+			if (this.runtime == 0){
+				this.back = false
+				this.angle = random(0,2*Math.PI)
+			}
+
+			// console.log("yo")
+		}else{
 		this.x += Math.cos(this.angle) * this.speed
 		this.y += Math.sin(this.angle) * this.speed
+		this.runtime += 1
 		if(this.x>(xwindow-this.radius/2)){
 			this.angle =Math.PI-this.angle
 		}
-		if(this.x<this.radius/2){
+		if(this.x<this.radius/2){ 
 			this.angle =Math.PI-this.angle
 		}
 
@@ -34,8 +53,11 @@ class ball{
 		}
 		if(this.y<this.radius/2){
 			this.angle = 2*Math.PI-this.angle
-		}
+		}}
+		
 	}
+
+
 
 }
 
@@ -47,6 +69,7 @@ function setup(){
  		balls.push(b)
 	}
 }
+
 // function keyPressed(){
 //  var b = new ball(random(10,30),random(200,255),random(200,255),random(200,255),random(0,360),random(1,3))
 //  balls.push(b)
