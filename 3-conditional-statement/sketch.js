@@ -7,7 +7,7 @@ let highscorename = localStorage.getItem("highname")
 let dead = true
 let name;
 function setup() {
-  createCanvas(500, 400);
+  createCanvas(1200, 600);
   //make one avatar called me
   me = new Avatar(width/2, 300, 3);
   name = prompt("whats ur name? ")
@@ -23,21 +23,20 @@ if(me.dead == false){
 
   if (frameCount % 25 == 0) {
 	  for(var i =0;i<floor(sqrt(frameCount)/10);i+=1){
-		let  b = new Ball(width, random(0,height), -(sqrt(frameCount)/5));
-		me.points+=1
-      	balls.push(b);
+		let  b = new Ball(width, random(0,height), -(sqrt(frameCount)/5),random(5,25));
+		me.points+=floor(sqrt(frameCount)/10)
+      	balls.push(b)
 	  }
 	  
     }
 
 //	draw all the balls in that array
 	for (let i = 0; i < balls.length; i++) {
-	 	      balls[i].drawBall();
-       	   balls[i].moveBall();
+	 	    balls[i].drawBall();
+       	   	balls[i].moveBall();
         	balls[i].bounceBall();
 	  }
 }
-
 }
 
 //avatar class
@@ -73,13 +72,17 @@ class Avatar {
 
     if (keyIsDown(DOWN_ARROW)) { // if you hold the down arrow, move down by speed
         this.y += this.speed;
-    }
 	}
+	
+	if (keyIsDown(LEFT_ARROW)) { //if you hold the up arrow, move up by speed
+		this.x -= this.speed;
+	 }
+ 
+	 if (keyIsDown(RIGHT_ARROW)) { // if you hold the down arrow, move down by speed
+		 this.x += this.speed;
+	 }
 
-  die(){
-
-
-  }
+	}
 
 }
 
@@ -88,10 +91,11 @@ class Avatar {
 class Ball {
 
 	//every ball needs an x value, a y value, and a speed
-	constructor(x,y, speed){
+	constructor(x,y, speed,size){
 		this.x = x;
     this.y = y;
-    this.speed = speed;
+	this.speed = speed;
+	this.size = size
 	}
 
 	// draw a ball on the screen at x,y
@@ -99,33 +103,42 @@ class Ball {
     	stroke(0);
       strokeWeight(1);
     	fill("red");
-		  ellipse(this.x,this.y,10,10);
+	ellipse(this.x,this.y,this.size,this.size);
 	}
 
 	//update the location of the ball, so it moves across the screen
 	moveBall(){
 		this.x = this.x+ this.speed;
 		this.y = this.y+.5;
-		textSize(10)
-		text(me.points,10,10)
-		text("highscore: " + highscore+ "    name: " + highscorename,30,10)
+		textSize(20)
+		fill("black")
+		noStroke()
+		text("score: " + me.points,10,20)
+		text("highscore: " + highscore+ "    name: " + highscorename,200,50)
+		text("Recent: " + localStorage.getItem('recentscore')+ "    name: " + localStorage.getItem('recentname'),200,20)
+		
 
 	}
 
 	//if the ball hits the person, change the speed value to negative (send it in the opposite direction)
   	bounceBall(){
-    		if (this.x >= me.x+28 && this.x <= me.x+33 && this.y > me.y+15 && this.y < me.y+65){
+    		if (this.x >= me.x+25 && this.x <= me.x+33 && this.y > me.y+15 && this.y < me.y+65){
 				  this.speed = -this.speed;
 				  me.points += 5
-			}
-			if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-15 && this.y < me.y+60){
+			}else if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-15 && this.y < me.y+60){
 				me.dead = true
-				textSize(60)
-				text('game over', 100, 200);
+				
+				
 				if (me.points>highscore){
 					localStorage.setItem("maxscore",me.points)
 					localStorage.setItem("highname",name)
 				}
+				localStorage.setItem('recentname',name)
+				localStorage.setItem('recentscore',me.points)
+				background(220)
+				textSize(60)
+				fill("red")
+				text('game over', 400, 200);
 		  	}	
   	}
 
