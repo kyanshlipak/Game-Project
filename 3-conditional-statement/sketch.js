@@ -69,13 +69,14 @@ class Avatar {
         strokeWeight(3);
 			fill("blue");
 			// rect(this.x-20, this.y-15, 30, 75);
-		    ellipse(this.x,this.y,20,20);
+		ellipse(this.x,this.y,30,30);
         line(this.x,this.y, this.x, this.y+40);
-        line(this.x, this.y+40, this.x-20, this.y+60);
+        line(this.x, this.y+40, this.x-20, this.y+70);
         line(this.x, this.y+40, this.x+10, this.y+50);
-        line(this.x+10, this.y+50, this.x+5, this.y+60);
+        line(this.x+10, this.y+50, this.x+5, this.y+70);
         line(this.x, this.y+15, this.x-10, this.y+25);
 		line(this.x-10, this.y+25, this.x+10, this.y+35);
+		fill("black")
 		ellipse(this.x+20,this.y+40,20,40)
 	}
 
@@ -138,7 +139,7 @@ class Ball {
     		if (this.x >= me.x+22 && this.x <= me.x+35 && this.y > me.y+15 && this.y < me.y+65){
 				  this.speed = -this.speed;
 				  me.points += 5
-			}else if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-15 && this.y < me.y+60){
+			}else if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-25 && this.y < me.y+75){
 				me.dead = true
 				
 				
