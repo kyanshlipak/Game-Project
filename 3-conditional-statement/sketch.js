@@ -6,12 +6,22 @@ let highscore = localStorage.getItem("maxscore")
 let highscorename = localStorage.getItem("highname")
 let dead = true
 let name;
+let framecount = 0;
 function setup() {
   createCanvas(1200, 600);
   //make one avatar called me
   me = new Avatar(width/2, 300, 3);
   name = prompt("whats ur name? ")
 
+}
+function reset(){
+	me.dead = false
+	balls = []
+	me.points = 0
+	framecount = 0
+	name = prompt("whats ur name? ")
+	me.x = width/2
+	me.y = 300
 }
 
 function draw(){
@@ -20,11 +30,15 @@ if(me.dead == false){
 
   me.drawMe();
   me.moveMe();
-
-  if (frameCount % 25 == 0) {
-	  for(var i =0;i<floor(sqrt(frameCount)/10);i+=1){
-		let  b = new Ball(width, random(0,height), -(sqrt(frameCount)/5),random(5,25));
-		me.points+=floor(sqrt(frameCount)/10)
+  framecount+=1
+  if (framecount % 25 == 0) {
+	  for(var i =0;i<floor(sqrt(framecount)/10);i+=1){
+		let speed = -(sqrt(framecount)/5)
+		if (speed>10){
+			speed = 10
+		}
+		let  b = new Ball(width, random(0,height), speed,random(5,25));
+		me.points+=floor(sqrt(framecount)/10)
       	balls.push(b)
 	  }
 	  
@@ -109,7 +123,6 @@ class Ball {
 	//update the location of the ball, so it moves across the screen
 	moveBall(){
 		this.x = this.x+ this.speed;
-		this.y = this.y+.5;
 		textSize(20)
 		fill("black")
 		noStroke()
@@ -122,7 +135,7 @@ class Ball {
 
 	//if the ball hits the person, change the speed value to negative (send it in the opposite direction)
   	bounceBall(){
-    		if (this.x >= me.x+25 && this.x <= me.x+33 && this.y > me.y+15 && this.y < me.y+65){
+    		if (this.x >= me.x+22 && this.x <= me.x+35 && this.y > me.y+15 && this.y < me.y+65){
 				  this.speed = -this.speed;
 				  me.points += 5
 			}else if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-15 && this.y < me.y+60){
@@ -139,6 +152,7 @@ class Ball {
 				textSize(60)
 				fill("red")
 				text('game over', 400, 200);
+				reset()
 		  	}	
   	}
 
