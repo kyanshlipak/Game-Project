@@ -175,7 +175,6 @@ class Ball {
 		fill("red");
 		imageMode(CENTER)
 		image(balloon,this.x,this.y,this.size,this.size)
-		ellipse(this.x,this.y,2,2)
 	}
 
 	//update the location of the ball, so it moves across the screen
@@ -186,9 +185,6 @@ class Ball {
 		noStroke()
 		text("score: " + me.points,10,20)
 		text("score2: " + needle.points,800,20)
-		text("highscore: " + highscore+ "    name: " + highscorename,200,50)
-		text("Recent: " + localStorage.getItem('recentscore')+ "    name: " + localStorage.getItem('recentname'),200,20)
-		
 
 	}
 
@@ -196,14 +192,16 @@ class Ball {
   	bounceBall(){
     		if (this.x >= me.x-20 && this.x <= me.x+20 && this.y > me.y-10 && this.y < me.y+10){
 				  this.speed = -this.speed;
-				  me.points += 5
+				  me.points += 10
 				  mySound.setVolume(0.1)
 				  mySound.play()
-			if (this.x == needle.x && this.y == needle.y){
-				needle.points+=1000
+			}
+			if (needle.x <= this.x+20 && needle.x >= this.x-20 && needle.y >= this.y-5 && needle.y <= this.y+6){
+			// if(needle.y <= this.y + 5 && needle.y >=this.y-5){
+				needle.points+=20
 			}
 			 
-			// }else if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-25 && this.y < me.y+75){
+			//if (this.x >= me.x-20 && this.x <= me.x+10 && this.y > me.y-25 && this.y < me.y+75){
 			// 	me.dead = true
 				
 				
@@ -221,4 +219,4 @@ class Ball {
 		  	// }	
   	}
 
-}}
+}
