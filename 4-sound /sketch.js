@@ -91,7 +91,7 @@ class Avatar {
         // line(this.x, this.y+15, this.x-10, this.y+25);
 		// line(this.x-10, this.y+25, this.x+10, this.y+35);
 		fill("black")
-		ellipse(this.x,this.y,40,20)
+		Animation(ghost,)
 	}
 
 	moveMe(){
