@@ -87,20 +87,28 @@ class Avatar {
 	}
 
 	moveMe(){
-    if (keyIsDown(UP_ARROW)) { //if you hold the up arrow, move up by speed
-       this.y -= this.speed;
+	if (keyIsDown(UP_ARROW)) { //if you hold the up arrow, move up by speed
+	   if (this.y>0){
+	   	this.y -= this.speed;
+	   }
     }
 
-    if (keyIsDown(DOWN_ARROW)) { // if you hold the down arrow, move down by speed
-        this.y += this.speed;
+	if (keyIsDown(DOWN_ARROW)) { // if you hold the down arrow, move down by speed
+		if (this.y<600){
+			this.y += this.speed;
+		}
 	}
 	
 	if (keyIsDown(LEFT_ARROW)) { //if you hold the up arrow, move up by speed
-		this.x -= this.speed;
+		if (this.x>0){
+			this.x -= this.speed;
+		}
 	 }
  
 	 if (keyIsDown(RIGHT_ARROW)) { // if you hold the down arrow, move down by speed
-		 this.x += this.speed;
+		if (this.x<1150){
+			this.x += this.speed;
+		}
 	 }
 
 	}
